@@ -16,6 +16,7 @@ class TriplePanel extends StatefulWidget {
   final bool leftPanelIsOpen;
   final bool rightPanelIsOpen;
 
+  final EdgeInsetsGeometry hookContentPadding;
   final Size hookSize;
   final Widget hookChild;
   final double hookRadius;
@@ -28,6 +29,7 @@ class TriplePanel extends StatefulWidget {
     this.body,
     this.leftPanel,
     this.rightPanel,
+    this.hookContentPadding,
     this.hookSize,
     this.hookChild,
     this.hookRadius,
@@ -102,7 +104,7 @@ class _TriplePanelState extends State<TriplePanel> {
       hookRadius: widget.hookRadius,
       hookColor: widget.hookColor,
       hookChild: Padding(
-        padding: EdgeInsets.only(left: 15, right: 15),
+        padding: widget.hookContentPadding ?? EdgeInsets.only(left: 15, right: 15),
         child: hookChild,
       ),
     );
