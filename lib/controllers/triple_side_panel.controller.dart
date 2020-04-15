@@ -4,7 +4,7 @@ class TripleSidePanelController {
 
   Function(bool isOpen) callback;
   void addListener(Function(bool) isOpenCallback) {
-    this.callback = callback;
+    this.callback = isOpenCallback;
   }
 
   void open() {
