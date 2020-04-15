@@ -1,6 +1,6 @@
 name: triple_panel
 description: An widget with three panels. One, main on the center on the screen and two another on the both sides left and right.
-version: 0.0.2
+version: 0.0.3
 author: Seba G. <sg@hetacode.pl>
 homepage: https://github.com/hetacode/triple-panel
 
