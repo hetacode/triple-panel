@@ -110,24 +110,14 @@ class _TriplePanelState extends State<TriplePanel> {
     );
   }
 
-  List<TripleSidePanel> panels() {
-    var panelsList = List<TripleSidePanel>();
-    if (widget.leftPanel != null) {
-      panelsList.add(panel(true, widget.leftPanel, widget.leftHookChild));
-    }
-
-    if (widget.rightPanel != null) {
-      panelsList.add(panel(false, widget.rightPanel, widget.rightHookChild));
-    }
-    return panelsList;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         this.widget.body,
-      ]..addAll(panels()),
+        (widget.leftPanel != null ? panel(true, widget.leftPanel, widget.leftHookChild) : Container()),
+        (widget.rightPanel != null ? panel(false, widget.rightPanel, widget.rightHookChild) : Container()),
+      ],
     );
   }
 
