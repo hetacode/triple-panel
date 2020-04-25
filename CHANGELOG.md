@@ -1,4 +1,4 @@
-## [0.0.4] - Added autoHideHooks prop
+## [0.0.5] - Added autoHideHooks prop
 
 ## [0.0.4] - Properly drawing dynamically generated panels
 
