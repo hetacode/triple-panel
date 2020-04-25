@@ -1,3 +1,5 @@
+## [0.0.4] - Added autoHideHooks prop
+
 ## [0.0.4] - Properly drawing dynamically generated panels
 
 ## [0.0.3] - Fixed TriplePanelController.
