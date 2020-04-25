@@ -5,8 +5,8 @@ import 'package:triple_panel/controllers/triple.controller.dart';
 import 'package:triple_panel/controllers/triple_side_panel.controller.dart';
 
 class TriplePanel extends StatefulWidget {
-  final TriplePanelController controller;
-  final Widget body;
+  @required final TriplePanelController controller;
+  @required final Widget body;
   final Widget leftPanel;
   final Widget rightPanel;
   final Widget leftHookChild;
@@ -15,6 +15,7 @@ class TriplePanel extends StatefulWidget {
   final Function(bool) rightPanelOpenState;
   final bool leftPanelIsOpen;
   final bool rightPanelIsOpen;
+  final bool autoHideHooks;
 
   final EdgeInsetsGeometry hookContentPadding;
   final Size hookSize;
@@ -24,25 +25,7 @@ class TriplePanel extends StatefulWidget {
   final HookPosition hookPosition;
   final double hookPadding;
 
-  TriplePanel({
-    this.controller,
-    this.body,
-    this.leftPanel,
-    this.rightPanel,
-    this.hookContentPadding,
-    this.hookSize,
-    this.hookChild,
-    this.hookRadius,
-    this.hookColor,
-    this.hookPosition,
-    this.hookPadding,
-    this.leftHookChild,
-    this.rightHookChild,
-    this.leftPanelOpenState,
-    this.rightPanelOpenState,
-    this.leftPanelIsOpen,
-    this.rightPanelIsOpen,
-  });
+  TriplePanel({this.controller, this.body, this.leftPanel, this.rightPanel, this.hookContentPadding, this.hookSize, this.hookChild, this.hookRadius, this.hookColor, this.hookPosition, this.hookPadding, this.leftHookChild, this.rightHookChild, this.leftPanelOpenState, this.rightPanelOpenState, this.leftPanelIsOpen, this.rightPanelIsOpen, this.autoHideHooks});
 
   @override
   _TriplePanelState createState() => _TriplePanelState();
@@ -57,8 +40,8 @@ class _TriplePanelState extends State<TriplePanel> {
   @override
   void initState() {
     super.initState();
-    leftPanelIsOpen = false;
-    rightPanelIsOpen = false;
+    leftPanelIsOpen = widget.leftPanelIsOpen ?? false;
+    rightPanelIsOpen = widget.rightPanelIsOpen ?? false;
 
     leftPanelController = TripleSidePanelController();
     rightPanelController = TripleSidePanelController();
@@ -103,10 +86,12 @@ class _TriplePanelState extends State<TriplePanel> {
       hookSize: widget.hookSize,
       hookRadius: widget.hookRadius,
       hookColor: widget.hookColor,
-      hookChild: Padding(
-        padding: widget.hookContentPadding ?? EdgeInsets.only(left: 15, right: 15),
-        child: hookChild,
-      ),
+      hookChild: (widget.autoHideHooks ?? false) && (rightPanelIsOpen || leftPanelIsOpen)
+          ? Container()
+          : Padding(
+              padding: widget.hookContentPadding ?? EdgeInsets.only(left: 15, right: 15),
+              child: hookChild,
+            ),
     );
   }
 
