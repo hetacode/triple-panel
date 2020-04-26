@@ -5,8 +5,10 @@ import 'package:triple_panel/controllers/triple.controller.dart';
 import 'package:triple_panel/controllers/triple_side_panel.controller.dart';
 
 class TriplePanel extends StatefulWidget {
-  @required final TriplePanelController controller;
-  @required final Widget body;
+  @required
+  final TriplePanelController controller;
+  @required
+  final Widget body;
   final Widget leftPanel;
   final Widget rightPanel;
   final Widget leftHookChild;
@@ -47,11 +49,17 @@ class _TriplePanelState extends State<TriplePanel> {
     rightPanelController = TripleSidePanelController();
 
     leftPanelController.addListener((isOpen) {
-      widget?.leftPanelOpenState(isOpen);
+      setState(() {
+        leftPanelIsOpen = isOpen;
+      });
+      widget.leftPanelOpenState?.call(isOpen);
     });
 
     rightPanelController.addListener((isOpen) {
-      widget?.rightPanelOpenState(isOpen);
+      setState(() {
+        rightPanelIsOpen = isOpen;
+      });
+      widget.rightPanelOpenState?.call(isOpen);
     });
 
     widget.controller.closeLeftPanelCallback = leftPanelController.close;

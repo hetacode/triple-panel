@@ -150,8 +150,34 @@ void main() {
 
     var sizedBoxOfHook = find.ancestor(of: find.byWidget(sidePanels.first.hookChild), matching: find.byType(GestureDetector));
     await tester.tap(sizedBoxOfHook);
+    await tester.pumpAndSettle(Duration(seconds: 2));
+    sidePanels = sidePanelsRaw.evaluate().map((m) => m.widget as TripleSidePanel).toList();
 
     expect(sidePanels.first.hookChild, isA<Container>().having((h) => h.child, "child", null));
+  });
+
+   testWidgets('When autoHideHooks is false then hook button should by visible when panel is open by hook tap', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: TriplePanel(
+          controller: TriplePanelController(),
+          autoHideHooks: false,
+          leftPanel: Container(),
+          leftHookChild: Test(),
+          body: Container(),
+        ),
+      ),
+    );
+
+    var sidePanelsRaw = find.byType(TripleSidePanel);
+    var sidePanels = sidePanelsRaw.evaluate().map((m) => m.widget as TripleSidePanel).toList();
+
+    var sizedBoxOfHook = find.ancestor(of: find.byWidget(sidePanels.first.hookChild), matching: find.byType(GestureDetector));
+    await tester.tap(sizedBoxOfHook);
+    await tester.pumpAndSettle(Duration(seconds: 2));
+    sidePanels = sidePanelsRaw.evaluate().map((m) => m.widget as TripleSidePanel).toList();
+
+    expect((sidePanels.first.hookChild as Padding).child, isA<Test>());
   });
 }
 
