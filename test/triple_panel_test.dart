@@ -131,6 +131,28 @@ void main() {
     expect(sidePanels.first.hookChild, isA<Padding>());
     expect((sidePanels.first.hookChild as Padding).child, isA<Test>());
   });
+
+  testWidgets('When autoHideHooks is true then hook button should by hidden when panel is open by hook tap', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: TriplePanel(
+          controller: TriplePanelController(),
+          autoHideHooks: true,
+          leftPanel: Container(),
+          leftHookChild: Test(),
+          body: Container(),
+        ),
+      ),
+    );
+
+    var sidePanelsRaw = find.byType(TripleSidePanel);
+    var sidePanels = sidePanelsRaw.evaluate().map((m) => m.widget as TripleSidePanel).toList();
+
+    var sizedBoxOfHook = find.ancestor(of: find.byWidget(sidePanels.first.hookChild), matching: find.byType(GestureDetector));
+    await tester.tap(sizedBoxOfHook);
+
+    expect(sidePanels.first.hookChild, isA<Container>().having((h) => h.child, "child", null));
+  });
 }
 
 class Test extends StatelessWidget {
